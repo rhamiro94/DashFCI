@@ -54,7 +54,10 @@ app.layout = html.Div([
         columns=[
                 {'name': 'Nombre', 'id': 'Nombre'},
                 {'name': 'Sociedad_Gerente', 'id': 'SG'},
-                {'name': 'VarCt-15', 'id': 'VarCt-15'},
+                {'name': 'Rendimiento diario', 'id': 'Var%'},
+                {'name': 'Rendimiento quincenal', 'id': 'VarCt-15'},
+                {'name': 'Rendimiento trim', 'id': 'VarCt-104'},
+                {'name': 'Rendimiento anual', 'id': 'VarCanual'},
                 {'name': 'Categoria', 'id': 'Categoria'}
             ],
         style_table={'overflowX': 'auto'},
@@ -66,7 +69,7 @@ app.layout = html.Div([
 
 def obtener_top_20_quincenal(df, categoria):
     df_filtrado = df[df['Categoria'] == categoria]
-    df_filtrado = df_filtrado[['Nombre', 'SG', 'VarCt-15', 'Categoria']]
+    df_filtrado = df_filtrado[['Nombre', 'SG','Var%','VarCt-15','VarCt-104','VarCanual','Categoria']]
     df_filtrado = df_filtrado.sort_values(by='VarCt-15', ascending=False)
     # Filtrar para que no se repita la sociedad gerente
     df_filtrado = df_filtrado.drop_duplicates(subset=['SG'])
