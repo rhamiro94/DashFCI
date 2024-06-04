@@ -53,6 +53,7 @@ app.layout = html.Div([
             id='tabla-top-20',
         columns=[
                 {'name': 'Nombre', 'id': 'Nombre'},
+                {'name': 'Fecha', 'id': 'Fecha'},
                 {'name': 'Sociedad_Gerente', 'id': 'SG'},
                 {'name': 'Rendimiento diario', 'id': 'Var%'},
                 {'name': 'Rendimiento quincenal', 'id': 'VarCt-15'},
