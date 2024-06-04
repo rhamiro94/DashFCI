@@ -70,7 +70,7 @@ app.layout = html.Div([
 
 def obtener_top_20_quincenal(df, categoria):
     df_filtrado = df[df['Categoria'] == categoria]
-    df_filtrado = df_filtrado[['Nombre', 'SG','Var%','VarCt-15','VarCt-104','VarCanual','Categoria']]
+    df_filtrado = df_filtrado[['Nombre','Fecha','SG','Var%','VarCt-15','VarCt-104','VarCanual','Categoria']]
     df_filtrado = df_filtrado.sort_values(by='VarCt-15', ascending=False)
     # Filtrar para que no se repita la sociedad gerente
     df_filtrado = df_filtrado.drop_duplicates(subset=['SG'])
