@@ -1,11 +1,10 @@
 #Creo dataframe sobre el cual se estructura mi pryoecto de Dash.
 import requests
-import bs4
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import pandas as pd
-import re
-## 
+import requests
+import openpyxl
 #Aqui funciona la api
 
 import pandas as pd
