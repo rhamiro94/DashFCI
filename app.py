@@ -56,8 +56,7 @@ app.layout = html.Div([
                 {'name': 'Fecha', 'id': 'Fecha'},
                 {'name': 'Sociedad_Gerente', 'id': 'SG'},
                 {'name': 'Rendimiento diario', 'id': 'Var%'},
-                {'name': 'Rendimiento quincenal', 'id': 'VarCt-15'},
-                {'name': 'Rendimiento trim', 'id': 'VarCt-104'},
+                {'name': 'Rendimiento semestral', 'id': 'VarCt-104'},
                 {'name': 'Rendimiento anual', 'id': 'VarCanual'},
                 {'name': 'Categoria', 'id': 'Categoria'}
             ],
@@ -70,7 +69,7 @@ app.layout = html.Div([
 
 def obtener_top_20_quincenal(df, categoria):
     df_filtrado = df[df['Categoria'] == categoria]
-    df_filtrado = df_filtrado[['Nombre','Fecha','SG','Var%','VarCt-15','VarCt-104','VarCanual','Categoria']]
+    df_filtrado = df_filtrado[['Nombre','Fecha','SG','Var%','VarCt-104','VarCanual','Categoria']]
     df_filtrado = df_filtrado.sort_values(by='VarCt-15', ascending=False)
     # Filtrar para que no se repita la sociedad gerente
     df_filtrado = df_filtrado.drop_duplicates(subset=['SG'])
@@ -94,39 +93,34 @@ def update_top20_table(categoria):
 )
 def update_graph(selected_fondo):
     fig = make_subplots(rows=1, cols=4, subplot_titles=(
-        'Rendimiento Diario', 'Rendimiento Quincenal', 'Rendimiento 100 Días', 'Rendimiento Anual'))
+        'Rendimiento Diario', 'Rendimiento Quincenal', 'Rendimiento 180 Días', 'Rendimiento Anual'))
 
     if not selected_fondo:
         # Si no hay fondo seleccionado, graficar todos los datos
         rendimiento_promediodiario = df.groupby('Categoria')['Var%'].mean().reset_index()
-        rendimiento_promedio15 = df.groupby('Categoria')['VarCt-15'].mean().reset_index()
         rendimiento_promedio100 = df.groupby('Categoria')['VarCt-104'].mean().reset_index()
         rendimiento_promedioanual = df.groupby('Categoria')['VarCanual'].mean().reset_index()
 
         # Agregar barras para cada tipo de rendimiento en los cuadrantes correspondientes
         fig.add_trace(go.Bar(x=rendimiento_promediodiario['Var%'], y=rendimiento_promediodiario['Categoria'], 
                              orientation='h', marker=dict(color='skyblue'), name='Rendimiento Diario'), row=1, col=1)
-        fig.add_trace(go.Bar(x=rendimiento_promedio15['VarCt-15'], y=rendimiento_promedio15['Categoria'], 
-                             orientation='h', marker=dict(color='salmon'), name='Rendimiento Quincenal'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedio100['VarCt-104'], y=rendimiento_promedio100['Categoria'], 
-                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 100 Días'), row=1, col=3)
+                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=3)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
                              orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=4)
     else:
         # Si se selecciona un fondo, filtrar los datos y graficarlos
         df_fondo = df[df['Nombre'] == selected_fondo]
         rendimiento_promediodiario = df_fondo.groupby('Categoria')['Var%'].mean().reset_index()
-        rendimiento_promedio15 = df_fondo.groupby('Categoria')['VarCt-15'].mean().reset_index()
         rendimiento_promedio100 = df_fondo.groupby('Categoria')['VarCt-104'].mean().reset_index()
         rendimiento_promedioanual = df_fondo.groupby('Categoria')['VarCanual'].mean().reset_index()
 
         # Agregar barras para cada tipo de rendimiento en los cuadrantes correspondientes
         fig.add_trace(go.Bar(x=rendimiento_promediodiario['Var%'], y=rendimiento_promediodiario['Categoria'], 
                              orientation='h', marker=dict(color='lightblue'), name='Rendimiento Diario'), row=1, col=1)
-        fig.add_trace(go.Bar(x=rendimiento_promedio15['VarCt-15'], y=rendimiento_promedio15['Categoria'], 
-                             orientation='h', marker=dict(color='lightcoral'), name='Rendimiento Quincenal'), row=1, col=2)
+        
         fig.add_trace(go.Bar(x=rendimiento_promedio100['VarCt-104'], y=rendimiento_promedio100['Categoria'], 
-                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 100 Días'), row=1, col=3)
+                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=3)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
                              orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=4)
 
