@@ -70,7 +70,7 @@ app.layout = html.Div([
 
 def obtener_top_20_quincenal(df, categoria):
     df_filtrado = df[df['Categoria'] == categoria]
-    df_filtrado = df_filtrado[['Nombre','Fecha','SG','Var%','VarCt-104','VarCanual','Categoria']]
+    df_filtrado = df_filtrado[['Nombre','Fecha','SG','Variación_Patrimonial','Var%','VarCt-104','VarCanual','Categoria']]
     df_filtrado = df_filtrado.sort_values(by='Var%', ascending=False)
     # Filtrar para que no se repita la sociedad gerente
     df_filtrado = df_filtrado.drop_duplicates(subset=['SG'])
@@ -93,14 +93,17 @@ def update_top20_table(categoria):
     [Input('fondo-dropdown', 'value')]
 )
 def update_graph(selected_fondo):
-    fig = make_subplots(rows=1, cols=3, subplot_titles=(
-        'Rendimiento Diario','Rendimiento 180 Días', 'Rendimiento Anual'))
+    fig = make_subplots(rows=1, cols=4, subplot_titles=(
+        'Rendimiento Diario','Rendimiento 180 Días', 'Rendimiento Anual','Variación_Patrimonial'))
 
     if not selected_fondo:
         # Si no hay fondo seleccionado, graficar todos los datos
         rendimiento_promediodiario = df.groupby('Categoria')['Var%'].mean().reset_index()
         rendimiento_promedio100 = df.groupby('Categoria')['VarCt-104'].mean().reset_index()
         rendimiento_promedioanual = df.groupby('Categoria')['VarCanual'].mean().reset_index()
+        rendimiento_promedioanual = df.groupby('Categoria')['Variación_Patrimonial'].mean().reset_index()
+
+
 
         # Agregar barras para cada tipo de rendimiento en los cuadrantes correspondientes
         fig.add_trace(go.Bar(x=rendimiento_promediodiario['Var%'], y=rendimiento_promediodiario['Categoria'], 
