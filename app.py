@@ -101,7 +101,7 @@ def update_graph(selected_fondo):
         rendimiento_promediodiario = df.groupby('Categoria')['Var%'].mean().reset_index()
         rendimiento_promedio100 = df.groupby('Categoria')['VarCt-104'].mean().reset_index()
         rendimiento_promedioanual = df.groupby('Categoria')['VarCanual'].mean().reset_index()
-        rendimiento_promedioanual = df.groupby('Categoria')['Variación_Patrimonial'].mean().reset_index()
+        varpatr_promedio = df.groupby('Categoria')['Variación_Patrimonial'].mean().reset_index()
 
 
 
@@ -112,7 +112,7 @@ def update_graph(selected_fondo):
                              orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
                              orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=3)
-        fig.add_trace(go.Bar(x=rendimiento_promedioanual['Variación_Patrimonial'], y=rendimiento_promedioanual['Categoria'], 
+        fig.add_trace(go.Bar(x=varpatr_promedio['Variación_Patrimonial'], y=varpatr_promedio['Categoria'], 
                              orientation='h', marker=dict(color='salmon'), name='Variación_Patrimonial'), row=1, col=4)
     else:
         # Si se selecciona un fondo, filtrar los datos y graficarlos
@@ -120,7 +120,7 @@ def update_graph(selected_fondo):
         rendimiento_promediodiario = df_fondo.groupby('Categoria')['Var%'].mean().reset_index()
         rendimiento_promedio100 = df_fondo.groupby('Categoria')['VarCt-104'].mean().reset_index()
         rendimiento_promedioanual = df_fondo.groupby('Categoria')['VarCanual'].mean().reset_index()
-        rendimiento_promedioanual = df_fondo.groupby('Categoria')['Variación_Patrimonial'].mean().reset_index()
+        varpatr_promedio = df_fondo.groupby('Categoria')['Variación_Patrimonial'].mean().reset_index()
 
 
         # Agregar barras para cada tipo de rendimiento en los cuadrantes correspondientes
@@ -130,7 +130,7 @@ def update_graph(selected_fondo):
                              orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
                              orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=3)
-        fig.add_trace(go.Bar(x=rendimiento_promedioanual['Variación_Patrimonial'], y=rendimiento_promedioanual['Categoria'], 
+        fig.add_trace(go.Bar(x=varpatr_promedio['Variación_Patrimonial'], y=varpatr_promedio['Categoria'], 
                              orientation='h', marker=dict(color='salmon'), name='Variación_Patrimonial'), row=1, col=4)
 
     fig.update_layout(height=600, width=1200, showlegend=False)
