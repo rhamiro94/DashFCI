@@ -92,7 +92,7 @@ def update_top20_table(categoria):
     [Input('fondo-dropdown', 'value')]
 )
 def update_graph(selected_fondo):
-    fig = make_subplots(rows=1, cols=4, subplot_titles=(
+    fig = make_subplots(rows=1, cols=3, subplot_titles=(
         'Rendimiento Diario','Rendimiento 180 Días', 'Rendimiento Anual'))
 
     if not selected_fondo:
