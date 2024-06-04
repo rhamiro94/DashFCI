@@ -105,9 +105,9 @@ def update_graph(selected_fondo):
         fig.add_trace(go.Bar(x=rendimiento_promediodiario['Var%'], y=rendimiento_promediodiario['Categoria'], 
                              orientation='h', marker=dict(color='skyblue'), name='Rendimiento Diario'), row=1, col=1)
         fig.add_trace(go.Bar(x=rendimiento_promedio100['VarCt-104'], y=rendimiento_promedio100['Categoria'], 
-                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=3)
+                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
-                             orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=4)
+                             orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=3)
     else:
         # Si se selecciona un fondo, filtrar los datos y graficarlos
         df_fondo = df[df['Nombre'] == selected_fondo]
@@ -120,9 +120,9 @@ def update_graph(selected_fondo):
                              orientation='h', marker=dict(color='lightblue'), name='Rendimiento Diario'), row=1, col=1)
         
         fig.add_trace(go.Bar(x=rendimiento_promedio100['VarCt-104'], y=rendimiento_promedio100['Categoria'], 
-                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=3)
+                             orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
-                             orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=4)
+                             orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=3)
 
     fig.update_layout(height=600, width=1200, showlegend=False)
     # Ocultar las etiquetas del eje y en todos los gráficos
