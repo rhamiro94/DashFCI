@@ -58,6 +58,7 @@ app.layout = html.Div([
                 {'name': 'Rendimiento diario', 'id': 'Var%'},
                 {'name': 'Rendimiento semestral', 'id': 'VarCt-104'},
                 {'name': 'Rendimiento anual', 'id': 'VarCanual'},
+                {'name': 'Variación_Patrimonial', 'id': 'Variación_Patrimonial'},
                 {'name': 'Categoria', 'id': 'Categoria'}
             ],
         style_table={'overflowX': 'auto'},
@@ -70,7 +71,7 @@ app.layout = html.Div([
 def obtener_top_20_quincenal(df, categoria):
     df_filtrado = df[df['Categoria'] == categoria]
     df_filtrado = df_filtrado[['Nombre','Fecha','SG','Var%','VarCt-104','VarCanual','Categoria']]
-    df_filtrado = df_filtrado.sort_values(by='VarCt-15', ascending=False)
+    df_filtrado = df_filtrado.sort_values(by='Var%', ascending=False)
     # Filtrar para que no se repita la sociedad gerente
     df_filtrado = df_filtrado.drop_duplicates(subset=['SG'])
     # Seleccionar los top 20
@@ -108,21 +109,26 @@ def update_graph(selected_fondo):
                              orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
                              orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=3)
+        fig.add_trace(go.Bar(x=rendimiento_promedioanual['Variación_Patrimonial'], y=rendimiento_promedioanual['Categoria'], 
+                             orientation='h', marker=dict(color='salmon'), name='Variación_Patrimonial'), row=1, col=4)
     else:
         # Si se selecciona un fondo, filtrar los datos y graficarlos
         df_fondo = df[df['Nombre'] == selected_fondo]
         rendimiento_promediodiario = df_fondo.groupby('Categoria')['Var%'].mean().reset_index()
         rendimiento_promedio100 = df_fondo.groupby('Categoria')['VarCt-104'].mean().reset_index()
         rendimiento_promedioanual = df_fondo.groupby('Categoria')['VarCanual'].mean().reset_index()
+        rendimiento_promedioanual = df_fondo.groupby('Categoria')['Variación_Patrimonial'].mean().reset_index()
+
 
         # Agregar barras para cada tipo de rendimiento en los cuadrantes correspondientes
         fig.add_trace(go.Bar(x=rendimiento_promediodiario['Var%'], y=rendimiento_promediodiario['Categoria'], 
                              orientation='h', marker=dict(color='lightblue'), name='Rendimiento Diario'), row=1, col=1)
-        
         fig.add_trace(go.Bar(x=rendimiento_promedio100['VarCt-104'], y=rendimiento_promedio100['Categoria'], 
                              orientation='h', marker=dict(color='lightgreen'), name='Rendimiento 180 Días'), row=1, col=2)
         fig.add_trace(go.Bar(x=rendimiento_promedioanual['VarCanual'], y=rendimiento_promedioanual['Categoria'], 
                              orientation='h', marker=dict(color='gray'), name='Rendimiento Anual'), row=1, col=3)
+        fig.add_trace(go.Bar(x=rendimiento_promedioanual['Variación_Patrimonial'], y=rendimiento_promedioanual['Categoria'], 
+                             orientation='h', marker=dict(color='salmon'), name='Variación_Patrimonial'), row=1, col=4)
 
     fig.update_layout(height=600, width=1200, showlegend=False)
     # Ocultar las etiquetas del eje y en todos los gráficos

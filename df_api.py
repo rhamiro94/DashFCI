@@ -81,4 +81,5 @@ for columna in columnas_a_transformar:
     df_filt = datos_sin_nulos[(datos_sin_nulos[columna] >= umbral_inferior) & (datos_sin_nulos[columna] <= umbral_superior)]
 
 #Guardo el archivo en un csv.
+df_filt["Variación_Patrimonial"]=(df_filt["PN0"]-df_filt["PNt-1"])/df_filt["PNt-1"] * 100
 df_filt.to_csv('datos_fci.csv', index=False)
