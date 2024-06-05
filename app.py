@@ -74,6 +74,8 @@ def obtener_top_20_quincenal(df, categoria):
     df_filtrado = df_filtrado.sort_values(by='Var%', ascending=False)
     # Filtrar para que no se repita la sociedad gerente
     df_filtrado = df_filtrado.drop_duplicates(subset=['SG'])
+    df_filtrado = df_filtrado.dropna(subset=['Variación_Patrimonial'])
+    df_filtrado = df_filtrado[df_filtrado['Variación_Patrimonial'] != 0]
     # Seleccionar los top 20
     top_20_quincenal = df_filtrado.head(20)
     return top_20_quincenal
