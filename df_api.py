@@ -1,6 +1,5 @@
 #Creo dataframe sobre el cual se estructura mi pryoecto de Dash.
 import requests
-from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import pandas as pd
 import requests
