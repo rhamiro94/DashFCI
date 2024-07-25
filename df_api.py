@@ -12,7 +12,7 @@ import pandas as pd
 # URL del archivo Excel
 url_archivo = "https://api.cafci.org.ar/pb_get"
 
-# Leer el archivo Excel directamente desde su URL
+# Leo el archivo Excel directamente desde su URL
 try:
     df = pd.read_excel(url_archivo,header=None,skiprows=10)
     # Ahora puedes trabajar con el DataFrame df como lo harías normalmente
