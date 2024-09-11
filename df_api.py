@@ -53,13 +53,15 @@ df["Datos"] = datos_separados
 # y una nueva columna "Datos" con los datos separado
 
 #Previo a eliminar valores nulos elimino variables que no considero utiles
-col_r = df.columns[24:44]
+col_r = df.columns[24:45]
 #Elimino columnas
 datos_limpio = df.drop(columns=col_r)
 
 #Ahora si el momento de borrar nulls
 # Eliminar filas con valores nulos
 datos_sin_nulos = datos_limpio.dropna()
+print(datos_sin_nulos.shape[1])  # Esto imprime el número de columnas
+print(datos_sin_nulos.columns)
 #Ahora tengo como les asigno nombre a estas columnas
 nombres_columnas = ['Nombre','Moneda', 'Región','Horizonte','Fecha', 'VCT0', 'VCT-1', 'Var%', 'Reexp.Pesos', 'VarCt-15', 'VarCt-104', 'VarCanual', 'QC', 'QC-1', 'PN0', 'PNt-1','MS','SD','CNV','CAL','CODCAF','CSG','CSD','SG','Categoria','Datos']
 
@@ -77,6 +79,9 @@ for columna in columnas_a_transformar:
     umbral_inferior = Q1 - 3 * IQR
     umbral_superior = Q3 + 3 * IQR
 
+    print(datos_sin_nulos.shape[1])  # Esto imprime el número de columnas
+    print(datos_sin_nulos.columns)  # Esto imprime los nombres de las columnas
+
     # Filtramos los valores que están dentro del rango intercuartílico para la columna actual
     df_filt = datos_sin_nulos[(datos_sin_nulos[columna] >= umbral_inferior) & (datos_sin_nulos[columna] <= umbral_superior)]
 
@@ -85,4 +90,6 @@ df_filt["Variación_Patrimonial"]=((df_filt["PN0"]-df_filt["PNt-1"])/df_filt["PN
 df_filt.to_csv('datos_fci.csv', index=False)
 
 
+print(datos_sin_nulos.shape[1])  # Esto imprime el número de columnas
+print(datos_sin_nulos.columns)  # Esto imprime los nombres de las columnas
 
